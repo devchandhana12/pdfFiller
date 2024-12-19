@@ -1,10 +1,14 @@
 import React from "react";
 import PieChartWidget from './GraphWidget';
+import LineGraph from "./LineGraph";
+import BarGraph from "./BarGraph";
 const data = [
   { name: "Page A", value: 400 },
   { name: "Page B", value: 300 },
   { name: "Page C", value: 200 },
   { name: "Page D", value: 278 },
+  { name: "Page E", value: 100 },
+  { name: "Page F", value: 178 },
 ];
 
 const App = () => {
@@ -12,14 +16,20 @@ const App = () => {
     <div
       style={{
         display: "flex",
-        justifyContent: "center",
+        flexWrap: "wrap",
         alignItems: "center",
-        height: "100vh",
+        // justifyContent:"ju"
       }}
     >
       <PieChartWidget
-        data={data} innerRadius={100} outerRadius={200}      
+        data={data}
+        innerRadius={60}
+        outerRadius={150}
+        minHeight={1000}
+        minWidth={1000}
       />
+      <LineGraph />
+      <BarGraph />
     </div>
   );
 };

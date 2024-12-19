@@ -11,8 +11,8 @@ import {
 
 interface PieChartWidgetProps {
   data: { name: string; value: number }[];
-  minWidth?: number;
-  minHeight?: number;
+  minWidth: number;
+  minHeight: number;
   innerRadius: number;
   outerRadius: number;
 }
@@ -86,35 +86,69 @@ const ActiveShape = (props: any) => {
 
 const PieChartWidget: React.FC<PieChartWidgetProps> = ({
   data,
-  minWidth = 500,
-  minHeight = 500,
+  minWidth,
+  minHeight,
   innerRadius,
   outerRadius,
 }) => {
+  const [dimensions, setDimensions] = useState({ width: 500, height: 500 });
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const onPieEnter = (_: any, index: number) => {
     setActiveIndex(index);
   };
 
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const COLORS = [
+    "#0088FE",
+    "#00C49F",
+    "#FFBB28",
+    "#FF8042",
+    "#A294F9",
+    "#8D0B41",
+  ];
+
+  const handleResize = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const startX = e.clientX;
+    const startY = e.clientY;
+
+    const startWidth = dimensions.width;
+    const startHeight = dimensions.height;
+
+    const handleMouseMove = (event: MouseEvent) => {
+      const newWidth = Math.max(minWidth, startWidth + event.clientX - startX);
+      const newHeight = Math.max(
+        minHeight,
+        startHeight + event.clientY - startY
+      );
+
+      setDimensions({ width: newWidth, height: newHeight });
+    };
+
+    const handleMouseUp = () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+  };
 
   return (
     <Draggable>
       <div
         style={{
+          width: `${dimensions.width}px`,
+          height: `${dimensions.height}px`,
           minWidth: `${minWidth}px`,
           minHeight: `${minHeight}px`,
-        //   width: "100%",
-        //   height: "100%",
-        //   resize: "both",
-        //   overflow: "hidden",
-        //   backgroundColor: "rgba(255, 255, 255, 0.8)", // Subtle translucent background
-          borderRadius: "8px",
-        //   boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+          //   border: "1px solid #ccc",
+          position: "relative",
+          outline: "none",
+          cursor: "move",
         }}
       >
-        <ResponsiveContainer>
+        <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               activeIndex={activeIndex}
