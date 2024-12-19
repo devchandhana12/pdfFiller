@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import Draggable from "react-draggable";
 import {
@@ -91,7 +92,7 @@ const PieChartWidget: React.FC<PieChartWidgetProps> = ({
   innerRadius,
   outerRadius,
 }) => {
-  const [dimensions, setDimensions] = useState({ width: 500, height: 500 });
+  const [dimensions] = useState({ width: 500, height: 500 });
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const onPieEnter = (_: any, index: number) => {
@@ -106,33 +107,6 @@ const PieChartWidget: React.FC<PieChartWidgetProps> = ({
     "#A294F9",
     "#8D0B41",
   ];
-
-  const handleResize = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const startX = e.clientX;
-    const startY = e.clientY;
-
-    const startWidth = dimensions.width;
-    const startHeight = dimensions.height;
-
-    const handleMouseMove = (event: MouseEvent) => {
-      const newWidth = Math.max(minWidth, startWidth + event.clientX - startX);
-      const newHeight = Math.max(
-        minHeight,
-        startHeight + event.clientY - startY
-      );
-
-      setDimensions({ width: newWidth, height: newHeight });
-    };
-
-    const handleMouseUp = () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-  };
 
   return (
     <Draggable>
@@ -162,7 +136,7 @@ const PieChartWidget: React.FC<PieChartWidgetProps> = ({
               dataKey="value"
               onMouseEnter={onPieEnter}
             >
-              {data.map((entry, index) => (
+              {data.map((_entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}

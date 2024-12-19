@@ -1,5 +1,4 @@
-import React from "react";
-import PieChartWidget from './GraphWidget';
+import PieChartWidget from "./GraphWidget";
 import LineGraph from "./LineGraph";
 import BarGraph from "./BarGraph";
 const data = [
