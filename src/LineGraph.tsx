@@ -22,7 +22,7 @@ const LineGraph = () => {
   ];
   return (
     <Draggable>
-      <div style={{ width: 500, height: 400 }}>
+      <div style={{ width: 350, height: 300 }}>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />

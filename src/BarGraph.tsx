@@ -23,7 +23,7 @@ const data = [
 const BarGraph = () => {
   return (
     <Draggable>
-      <div style={{ width: 500, height: 400 }}>
+      <div style={{ width: 300, height: 300 }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
